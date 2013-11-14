@@ -8,6 +8,7 @@
 
 #import "AddRecordsStorageUnitViewController.h"
 #import "EditStorageUnitsViewController.h"
+#import "deviceSelector.h"
 
 @interface AddRecordsStorageUnitViewController ()
 {
@@ -23,6 +24,7 @@
 @synthesize tempAlert;
 @synthesize dateField,timeField;
 @synthesize dateBack,dateLbl,timeBack,timeLbl;
+@synthesize d,p,manager,setupData,sensorsEnabled;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,9 +55,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    iCelsius = [iCelsiusAPI sharedManager];
-    iCelsius.dataConsumer = (DataProtocol*)self;
-    [iCelsius setSamplingPeriod:2.0];
     blockViewFlag = 0;
     confirmDelete = 0;
     Scroll.contentSize = CGSizeMake(320, mainView.frame.size.height - 100);
@@ -82,6 +81,23 @@
 
 -(void)loadDataForView
 {
+    
+    if (dbmanager.d)
+    {
+        self.d = dbmanager.d;
+        
+        self.sensorsEnabled = [[NSMutableArray alloc] init];
+        if (!self.d.p.isConnected) {
+            self.d.manager.delegate = self;
+            [self.d.manager connectPeripheral:self.d.p options:nil];
+        }
+        else {
+            self.d.p.delegate = self;
+            [self configureSensorTag];
+            self.navigationItem.title = @"STORAGE UNIT";
+        }
+    }
+
     dbmanager.fmResults=[dbmanager.fmDatabase executeQuery:@"SELECT * FROM AddStorageUnits WHERE StorageUnitName = ?",[dbmanager.tempArray objectAtIndex:0]];
     while([dbmanager.fmResults next])
     {
@@ -355,16 +371,18 @@
 
 - (IBAction)scanButtonClicked:(id)sender
 {
-    if (iCelsius.isConnected == NO)
-    {
-        UIAlertView *sucess = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"iCelcius device is not connected!!Or Not connected properly!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [sucess show];
-        sucess = nil;
-    }
-    else
-    {
-        [self performSelector:@selector(stopConsuming) withObject:nil afterDelay:2.5];
-    }
+//    if (iCelsius.isConnected == NO)
+//    {
+//        UIAlertView *sucess = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"iCelcius device is not connected!!Or Not connected properly!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//        [sucess show];
+//        sucess = nil;
+//    }
+//    else
+//    {
+//        [self performSelector:@selector(stopConsuming) withObject:nil afterDelay:2.5];
+//    }
+    deviceSelector *dS = [[deviceSelector alloc]initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:dS animated:YES];
 }
 
 - (void)confirmClicked
@@ -465,7 +483,6 @@
                 [sucess show];
                 sucess = nil;
                 check = nil;
-                iCelsius = nil;
             }
             else
             {
@@ -614,34 +631,119 @@
         [self backClicked];
     }
 }
-#pragma iCelsius API implementation
-- (void)consumeData:(Data*)data
+//SENSOR Tag
+-(void) configureSensorTag
 {
-    NSLog(@"Data from the device %@",data);
-    data.timestamp = 2.0;
-    if (data)
+    // Configure sensortag, turning on Sensors and setting update period for sensors etc ...
+    
+    if (([self sensorEnabled:@"Ambient temperature active"]) || ([self sensorEnabled:@"IR temperature active"]))
     {
-        self.tempField.text = [NSString stringWithFormat:@"%f",[data.m1 floatValue]];
-    }
-    else
-    {
-        UIAlertView *sucess = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Connect the device properly!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [sucess show];
-        sucess = nil;
+        // Enable Temperature sensor
+        CBUUID *sUUID = [CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature service UUID"]];
+        CBUUID *cUUID = [CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature config UUID"]];
+        uint8_t data = 0x01;
+        [BLEUtility writeCharacteristic:self.d.p sCBUUID:sUUID cCBUUID:cUUID data:[NSData dataWithBytes:&data length:1]];
+        cUUID = [CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature data UUID"]];
+        [BLEUtility setNotificationForCharacteristic:self.d.p sCBUUID:sUUID cCBUUID:cUUID enable:YES];
+        
+        if ([self sensorEnabled:@"Ambient temperature active"]) [self.sensorsEnabled addObject:@"Ambient temperature"];
+        if ([self sensorEnabled:@"IR temperature active"]) [self.sensorsEnabled addObject:@"IR temperature"];
+        
     }
 }
-- (void)stopConsuming
+
+-(void) deconfigureSensorTag
 {
-    self.tempField.text = @"-";
+    if (([self sensorEnabled:@"Ambient temperature active"]) || ([self sensorEnabled:@"IR temperature active"]))
+    {
+        // Enable Temperature sensor
+        CBUUID *sUUID =  [CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature service UUID"]];
+        CBUUID *cUUID =  [CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature config UUID"]];
+        unsigned char data = 0x00;
+        [BLEUtility writeCharacteristic:self.d.p sCBUUID:sUUID cCBUUID:cUUID data:[NSData dataWithBytes:&data length:1]];
+        cUUID =  [CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature data UUID"]];
+        [BLEUtility setNotificationForCharacteristic:self.d.p sCBUUID:sUUID cCBUUID:cUUID enable:NO];
+    }
 }
-- (void)setProduct:(ProductProtocol*)product
+
+-(bool)sensorEnabled:(NSString *)Sensor
+{
+    NSString *val = [self.d.setupData valueForKey:Sensor];
+    if (val)
+    {
+        if ([val isEqualToString:@"1"]) return TRUE;
+    }
+    return FALSE;
+}
+
+-(int)sensorPeriod:(NSString *)Sensor
+{
+    NSString *val = [self.d.setupData valueForKey:Sensor];
+    return [val integerValue];
+}
+
+#pragma mark - CBCentralManager delegate function
+-(void) centralManagerDidUpdateState:(CBCentralManager *)central
 {
     
 }
-- (void)processError:(NSString*)errorMessage withTitle:(NSString*)errorTitle
+
+-(void) centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
-    UIAlertView* alertWithOkButton = [[UIAlertView alloc] initWithTitle:errorTitle                                                                                                                    message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alertWithOkButton show];
-    alertWithOkButton = nil;
+    peripheral.delegate = self;
+    [peripheral discoverServices:nil];
+}
+
+
+#pragma mark - CBperipheral delegate functions
+
+-(void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
+{
+    NSLog(@"..");
+    if ([service.UUID isEqual:[CBUUID UUIDWithString:[self.d.setupData valueForKey:@"Gyroscope service UUID"]]])
+    {
+        [self configureSensorTag];
+    }
+}
+
+-(void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
+{
+    NSLog(@".");
+    for (CBService *s in peripheral.services) [peripheral discoverCharacteristics:nil forService:s];
+}
+
+-(void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    NSLog(@"didUpdateNotificationStateForCharacteristic %@, error = %@",characteristic.UUID, error);
+}
+
+-(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    //NSLog(@"didUpdateValueForCharacteristic = %@",characteristic.UUID);
+    
+    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:[self.d.setupData valueForKey:@"IR temperature data UUID"]]])
+    {
+        float tAmb = [sensorTMP006 calcTAmb:characteristic.value];
+        float tObj = [sensorTMP006 calcTObj:characteristic.value];
+        tempField.text = [NSString stringWithFormat:@"%f",tAmb];
+    }
+}
+
+-(void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    NSLog(@"didWriteValueForCharacteristic %@ error = %@",characteristic.UUID,error);
+}
+
+//SENSOR TAG
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self deconfigureSensorTag];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    self.sensorsEnabled = nil;
+    self.d.manager.delegate = nil;
 }
 @end

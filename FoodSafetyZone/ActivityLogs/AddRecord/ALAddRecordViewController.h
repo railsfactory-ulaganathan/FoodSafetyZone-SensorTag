@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "DBManager.h"
-#import <iCelsiusAPIPack/iCelsiusAPI.h>
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "BLEUtility.h"
+#import <MessageUI/MessageUI.h>
+#import "Sensors.h"
+#import "BLEDevice.h"
+#define MIN_ALPHA_FADE 0.2f
+#define ALPHA_FADE_STEP 0.05f
 
-@interface ALAddRecordViewController : UIViewController<UIAlertViewDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,DataProtocol>
+@interface ALAddRecordViewController : UIViewController<UIAlertViewDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,CBCentralManagerDelegate,CBPeripheralDelegate>
 {
     DBManager *dbManager;
-    iCelsiusAPI* iCelsius;
     NSMutableString *tempStorageValues;
     int selectedId,sts,idd,startStatus,stStatus;
     NSMutableArray *activityArray;
@@ -62,4 +67,21 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *CCRStartButt;
 @property (strong, nonatomic) IBOutlet UIButton *otherStartButt;
+
+//SENSOR TAG
+
+@property (strong,nonatomic) BLEDevice *d;
+/// Pointer to CoreBluetooth peripheral
+@property (strong,nonatomic) CBPeripheral *p;
+/// Pointer to CoreBluetooth manager that found this peripheral
+@property (strong,nonatomic) CBCentralManager *manager;
+/// Pointer to dictionary with device setup data
+@property NSMutableDictionary *setupData;
+@property NSMutableArray *sensorsEnabled;
+@property (strong,nonatomic) NSMutableArray *vals;
+
+-(void) configureSensorTag;
+-(void) deconfigureSensorTag;
+//SENSOR TAG
+
 @end

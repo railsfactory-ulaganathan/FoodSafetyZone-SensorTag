@@ -11,8 +11,14 @@
 #import "GridViewCell.h"
 #import "AddRecordsStorageUnitViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import <iCelsiusAPIPack/iCelsiusAPI.h>
-@interface StorageUnitGridViewController : UIViewController<UISearchBarDelegate,UIAlertViewDelegate,UIGestureRecognizerDelegate,DataProtocol>
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "BLEUtility.h"
+#import <MessageUI/MessageUI.h>
+#import "Sensors.h"
+#import "BLEDevice.h"
+#define MIN_ALPHA_FADE 0.2f
+#define ALPHA_FADE_STEP 0.05f
+@interface StorageUnitGridViewController : UIViewController<UISearchBarDelegate,UIAlertViewDelegate,UIGestureRecognizerDelegate,CBCentralManagerDelegate,CBPeripheralDelegate>
 {
     NSMutableArray	*filteredListContent;
     NSMutableArray  *filteredImagesList;
@@ -23,7 +29,6 @@
     NSInteger		savedScopeButtonIndex;
     BOOL			searchWasActive;
     DBManager *dbmanager;
-    iCelsiusAPI* iCelsius;
     NSString *selStorageName;
     NSString *selStorageUnitType;
     NSString *selAlertMes;
@@ -41,5 +46,23 @@
 @property (nonatomic) NSInteger savedScopeButtonIndex;
 @property (nonatomic) BOOL searchWasActive;
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScroll;
+
+
+//SENSOR TAG
+
+@property (strong,nonatomic) BLEDevice *d;
+/// Pointer to CoreBluetooth peripheral
+@property (strong,nonatomic) CBPeripheral *p;
+/// Pointer to CoreBluetooth manager that found this peripheral
+@property (strong,nonatomic) CBCentralManager *manager;
+/// Pointer to dictionary with device setup data
+@property NSMutableDictionary *setupData;
+@property NSMutableArray *sensorsEnabled;
+@property (strong,nonatomic) NSMutableArray *vals;
+
+-(void) configureSensorTag;
+-(void) deconfigureSensorTag;
+//SENSOR TAG
+
 
 @end

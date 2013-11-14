@@ -11,7 +11,7 @@
 static DBManager *_shareInstane;
 
 @implementation DBManager
-@synthesize fmDatabase,fmResults,tempStorageValues,tempArray;
+@synthesize fmDatabase,fmResults,tempStorageValues,tempArray,d;
 
 +(DBManager *)sharedInstance {
 	if (_shareInstane == nil) {

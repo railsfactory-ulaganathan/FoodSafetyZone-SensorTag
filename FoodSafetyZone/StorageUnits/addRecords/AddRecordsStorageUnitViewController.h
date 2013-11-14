@@ -7,13 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <iCelsiusAPIPack/iCelsiusAPI.h>
 #import "DBManager.h"
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "BLEUtility.h"
+#import <MessageUI/MessageUI.h>
+#import "Sensors.h"
+#import "BLEDevice.h"
+#define MIN_ALPHA_FADE 0.2f
+#define ALPHA_FADE_STEP 0.05f
 
-@interface AddRecordsStorageUnitViewController : UIViewController<UIActionSheetDelegate,DataProtocol>
+
+@interface AddRecordsStorageUnitViewController : UIViewController<UIActionSheetDelegate,CBCentralManagerDelegate,CBPeripheralDelegate>
 {
     DBManager *dbmanager;
-    iCelsiusAPI* iCelsius;
     UIActionSheet *actionSheet;
     UIView *blockView;
     
@@ -52,6 +58,23 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeLbl;
 @property (strong, nonatomic) IBOutlet UIImageView *timeBack;
 
+
+
+//SENSOR TAG
+
+@property (strong,nonatomic) BLEDevice *d;
+/// Pointer to CoreBluetooth peripheral
+@property (strong,nonatomic) CBPeripheral *p;
+/// Pointer to CoreBluetooth manager that found this peripheral
+@property (strong,nonatomic) CBCentralManager *manager;
+/// Pointer to dictionary with device setup data
+@property NSMutableDictionary *setupData;
+@property NSMutableArray *sensorsEnabled;
+@property (strong,nonatomic) NSMutableArray *vals;
+
+-(void) configureSensorTag;
+-(void) deconfigureSensorTag;
+//SENSOR TAG
 
 
 - (IBAction)scanButtonClicked:(id)sender;

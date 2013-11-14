@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <iCelsiusAPIPack/iCelsiusAPI.h>
 #import "DBManager.h"
-@interface GRAddRecordViewController : UIViewController<UIActionSheetDelegate,UIAlertViewDelegate>
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "BLEUtility.h"
+#import <MessageUI/MessageUI.h>
+#import "Sensors.h"
+#import "BLEDevice.h"
+#define MIN_ALPHA_FADE 0.2f
+#define ALPHA_FADE_STEP 0.05f
+
+@interface GRAddRecordViewController : UIViewController<UIActionSheetDelegate,UIAlertViewDelegate,CBCentralManagerDelegate,CBPeripheralDelegate>
 {
     DBManager *dbManager;
-    iCelsiusAPI* iCelsius;
     UIActionSheet *actionSheet;
     UIDatePicker *datePicker;
     UIToolbar *toolBar;
@@ -39,4 +45,21 @@
 - (IBAction)optionChanged:(UIButton *)sender;
 @property (strong, nonatomic) IBOutlet UIButton *option1;
 @property (strong, nonatomic) IBOutlet UIButton *option2;
+
+//SENSOR TAG
+
+@property (strong,nonatomic) BLEDevice *d;
+/// Pointer to CoreBluetooth peripheral
+@property (strong,nonatomic) CBPeripheral *p;
+/// Pointer to CoreBluetooth manager that found this peripheral
+@property (strong,nonatomic) CBCentralManager *manager;
+/// Pointer to dictionary with device setup data
+@property NSMutableDictionary *setupData;
+@property NSMutableArray *sensorsEnabled;
+@property (strong,nonatomic) NSMutableArray *vals;
+
+-(void) configureSensorTag;
+-(void) deconfigureSensorTag;
+//SENSOR TAG
+
 @end

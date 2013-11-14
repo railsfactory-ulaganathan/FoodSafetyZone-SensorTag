@@ -10,18 +10,21 @@
 #import <sqlite3.h>
 #import "FMDatabase.h"
 #import "FMResultSet.h"
+#import "BLEDevice.h"
 @interface DBManager : NSObject
 {
     FMDatabase *fmDatabase;
     FMResultSet *fmResults;
     NSMutableString *tempStorageValues;
     NSMutableArray *tempArray;
+    BLEDevice *d;
 }
 
 @property(nonatomic,retain)FMDatabase *fmDatabase;
 @property(nonatomic,retain)FMResultSet *fmResults;
 @property(nonatomic,strong)NSMutableString *tempStorageValues;
 @property(nonatomic,retain) NSMutableArray *tempArray;
+@property (strong,nonatomic) BLEDevice *d;
 
 +(DBManager *)sharedInstance;
 

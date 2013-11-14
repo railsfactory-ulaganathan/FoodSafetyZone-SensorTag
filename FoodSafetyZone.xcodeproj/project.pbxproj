@@ -75,6 +75,12 @@
 		158E4B53180416F70099AA6C /* icon_trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 158E4B4F180416F70099AA6C /* icon_trash.png */; };
 		158E4B58180417860099AA6C /* AddSupplierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E4B56180417860099AA6C /* AddSupplierViewController.m */; };
 		158E4B59180417860099AA6C /* AddSupplierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 158E4B57180417860099AA6C /* AddSupplierViewController.xib */; };
+		158E90A31834C85C00AD9396 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158E90A21834C85C00AD9396 /* CoreBluetooth.framework */; };
+		158E90AF1834C8B300AD9396 /* BLEDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E90A61834C8B300AD9396 /* BLEDevice.m */; };
+		158E90B01834C8B300AD9396 /* BLEUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E90A81834C8B300AD9396 /* BLEUtility.m */; };
+		158E90B11834C8B400AD9396 /* deviceCellTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E90AA1834C8B300AD9396 /* deviceCellTemplate.m */; };
+		158E90B21834C8B400AD9396 /* deviceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E90AC1834C8B300AD9396 /* deviceSelector.m */; };
+		158E90B31834C8B400AD9396 /* Sensors.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E90AE1834C8B300AD9396 /* Sensors.m */; };
 		158E99C317EC4951008F5376 /* stop-watch.png in Resources */ = {isa = PBXBuildFile; fileRef = 158E99C217EC4951008F5376 /* stop-watch.png */; };
 		158E99C717EC5434008F5376 /* TimeLogReportListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158E99C517EC5434008F5376 /* TimeLogReportListViewController.m */; };
 		158E99C817EC5434008F5376 /* TimeLogReportListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 158E99C617EC5434008F5376 /* TimeLogReportListViewController.xib */; };
@@ -203,7 +209,6 @@
 		1594CE451796B9240052A2DB /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1594CE3E1796B9240052A2DB /* SBJsonWriter.m */; };
 		159541E117DEEC5B0087AE32 /* AddRecordsStorageUnitViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 159541E017DEEC5B0087AE32 /* AddRecordsStorageUnitViewController5.xib */; };
 		159541E317DF23EF0087AE32 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159541E217DF23EF0087AE32 /* ExternalAccessory.framework */; };
-		159541E517DF245B0087AE32 /* iCelsiusAPIPack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159541E417DF245A0087AE32 /* iCelsiusAPIPack.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1595725B17B9001500258D8E /* EditStorageUnitsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1595725917B9001500258D8E /* EditStorageUnitsViewController.m */; };
 		1595725C17B9001500258D8E /* EditStorageUnitsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1595725A17B9001500258D8E /* EditStorageUnitsViewController.xib */; };
 		1595ADF01817A36900897BBB /* CSListViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1595ADEF1817A36900897BBB /* CSListViewController5.xib */; };
@@ -426,6 +431,17 @@
 		158E4B55180417860099AA6C /* AddSupplierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddSupplierViewController.h; path = approvedSuppliers/AddSupplierView/AddSupplierViewController.h; sourceTree = "<group>"; };
 		158E4B56180417860099AA6C /* AddSupplierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddSupplierViewController.m; path = approvedSuppliers/AddSupplierView/AddSupplierViewController.m; sourceTree = "<group>"; };
 		158E4B57180417860099AA6C /* AddSupplierViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddSupplierViewController.xib; path = approvedSuppliers/AddSupplierView/AddSupplierViewController.xib; sourceTree = "<group>"; };
+		158E90A21834C85C00AD9396 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		158E90A51834C8B300AD9396 /* BLEDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEDevice.h; path = Sensortag/BLEDevice.h; sourceTree = "<group>"; };
+		158E90A61834C8B300AD9396 /* BLEDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEDevice.m; path = Sensortag/BLEDevice.m; sourceTree = "<group>"; };
+		158E90A71834C8B300AD9396 /* BLEUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEUtility.h; path = Sensortag/BLEUtility.h; sourceTree = "<group>"; };
+		158E90A81834C8B300AD9396 /* BLEUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEUtility.m; path = Sensortag/BLEUtility.m; sourceTree = "<group>"; };
+		158E90A91834C8B300AD9396 /* deviceCellTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deviceCellTemplate.h; path = Sensortag/deviceCellTemplate.h; sourceTree = "<group>"; };
+		158E90AA1834C8B300AD9396 /* deviceCellTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = deviceCellTemplate.m; path = Sensortag/deviceCellTemplate.m; sourceTree = "<group>"; };
+		158E90AB1834C8B300AD9396 /* deviceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deviceSelector.h; path = Sensortag/deviceSelector.h; sourceTree = "<group>"; };
+		158E90AC1834C8B300AD9396 /* deviceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = deviceSelector.m; path = Sensortag/deviceSelector.m; sourceTree = "<group>"; };
+		158E90AD1834C8B300AD9396 /* Sensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sensors.h; path = Sensortag/Sensors.h; sourceTree = "<group>"; };
+		158E90AE1834C8B300AD9396 /* Sensors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sensors.m; path = Sensortag/Sensors.m; sourceTree = "<group>"; };
 		158E99C217EC4951008F5376 /* stop-watch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stop-watch.png"; path = "resources/TimeLog/stop-watch.png"; sourceTree = "<group>"; };
 		158E99C417EC5434008F5376 /* TimeLogReportListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLogReportListViewController.h; path = Reports/TimeLogs/TimeLogReportListViewController.h; sourceTree = "<group>"; };
 		158E99C517EC5434008F5376 /* TimeLogReportListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeLogReportListViewController.m; path = Reports/TimeLogs/TimeLogReportListViewController.m; sourceTree = "<group>"; };
@@ -594,7 +610,6 @@
 		1594CE3E1796B9240052A2DB /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = JSON/SBJsonWriter.m; sourceTree = "<group>"; };
 		159541E017DEEC5B0087AE32 /* AddRecordsStorageUnitViewController5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddRecordsStorageUnitViewController5.xib; path = StorageUnits/addRecords/AddRecordsStorageUnitViewController5.xib; sourceTree = "<group>"; };
 		159541E217DF23EF0087AE32 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		159541E417DF245A0087AE32 /* iCelsiusAPIPack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iCelsiusAPIPack.framework; path = FoodSafetyZone/iCelsiusAPIPack.framework; sourceTree = "<group>"; };
 		1595725817B9001500258D8E /* EditStorageUnitsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditStorageUnitsViewController.h; path = StorageUnits/EditStorageUnits/EditStorageUnitsViewController.h; sourceTree = "<group>"; };
 		1595725917B9001500258D8E /* EditStorageUnitsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = EditStorageUnitsViewController.m; path = StorageUnits/EditStorageUnits/EditStorageUnitsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1595725A17B9001500258D8E /* EditStorageUnitsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditStorageUnitsViewController.xib; path = StorageUnits/EditStorageUnits/EditStorageUnitsViewController.xib; sourceTree = "<group>"; };
@@ -778,7 +793,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				159541E517DF245B0087AE32 /* iCelsiusAPIPack.framework in Frameworks */,
+				158E90A31834C85C00AD9396 /* CoreBluetooth.framework in Frameworks */,
 				159541E317DF23EF0087AE32 /* ExternalAccessory.framework in Frameworks */,
 				158EF4E717A162FC00C471F5 /* CoreText.framework in Frameworks */,
 				158EF4E517A0F20600C471F5 /* QuartzCore.framework in Frameworks */,
@@ -829,7 +844,7 @@
 		158B0A871793D8290083D086 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				159541E417DF245A0087AE32 /* iCelsiusAPIPack.framework */,
+				158E90A21834C85C00AD9396 /* CoreBluetooth.framework */,
 				159541E217DF23EF0087AE32 /* ExternalAccessory.framework */,
 				158EF4E617A162FB00C471F5 /* CoreText.framework */,
 				158EF4E417A0F20600C471F5 /* QuartzCore.framework */,
@@ -848,6 +863,7 @@
 		158B0A8E1793D8290083D086 /* FoodSafetyZone */ = {
 			isa = PBXGroup;
 			children = (
+				158E90A41834C89900AD9396 /* SensorTag */,
 				1595ADFD1817A41100897BBB /* ActivityLog */,
 				159688801816410C0005F928 /* CleaningSchedule */,
 				158F4B7018153469001742A9 /* EquipmentCalibaration */,
@@ -1161,6 +1177,23 @@
 				157BD9BC180E71ED0027A93B /* AddSupplierViewController5.xib */,
 			);
 			name = AddSupplierView;
+			sourceTree = "<group>";
+		};
+		158E90A41834C89900AD9396 /* SensorTag */ = {
+			isa = PBXGroup;
+			children = (
+				158E90A51834C8B300AD9396 /* BLEDevice.h */,
+				158E90A61834C8B300AD9396 /* BLEDevice.m */,
+				158E90A71834C8B300AD9396 /* BLEUtility.h */,
+				158E90A81834C8B300AD9396 /* BLEUtility.m */,
+				158E90A91834C8B300AD9396 /* deviceCellTemplate.h */,
+				158E90AA1834C8B300AD9396 /* deviceCellTemplate.m */,
+				158E90AB1834C8B300AD9396 /* deviceSelector.h */,
+				158E90AC1834C8B300AD9396 /* deviceSelector.m */,
+				158E90AD1834C8B300AD9396 /* Sensors.h */,
+				158E90AE1834C8B300AD9396 /* Sensors.m */,
+			);
+			name = SensorTag;
 			sourceTree = "<group>";
 		};
 		158F4B7018153469001742A9 /* EquipmentCalibaration */ = {
@@ -2260,6 +2293,11 @@
 				158C5C0E182138860084501F /* ALDisplayReportListViewController.m in Sources */,
 				158C5C13182139D60084501F /* ALDisplayReportViewController.m in Sources */,
 				15A2DA44182231A200F85894 /* MasterEquipmentsViewController.m in Sources */,
+				158E90AF1834C8B300AD9396 /* BLEDevice.m in Sources */,
+				158E90B01834C8B300AD9396 /* BLEUtility.m in Sources */,
+				158E90B11834C8B400AD9396 /* deviceCellTemplate.m in Sources */,
+				158E90B21834C8B400AD9396 /* deviceSelector.m in Sources */,
+				158E90B31834C8B400AD9396 /* Sensors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
